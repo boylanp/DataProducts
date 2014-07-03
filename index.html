@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Preditor-Prey Relationship</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Preditor-Prey Relationship">
+  <meta name="author" content="">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Preditor-Prey Relationship</h1>
+    <h2>A Population Case Study</h2>
+    <p><br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="class" id="id" style="background:#F9B1A4;">
+  <hgroup>
+    <h2>Introduction</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The relationship between foxes and bunnies (rabbits) can be modeled by the Lotka-Volterra Equations, shown as:</p>
+
+<p>\[\frac{d R}{d t} = \alpha R - \beta R F\]</p>
+
+<p>\[\frac{d F}{d t} = \gamma R F - \delta F\]</p>
+
+<p>Where alpha, beta, gamma, and delta are various parameters used to describe
+the growth/death rate of the (R)abbits and (F)oxes.  </p>
+
+<p>The general idea is that fox and rabbit populations depends on one another.  Too many foxes and the rabbit population declines which causes the foxes to go hungry and they die out too.  Too many rabbits and the fox population explodes due to excess food and the cycle repeates.  </p>
+
+<p>This can be a useful tool in determining if the species are over- or under-popluated.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:orange;">
+  <hgroup>
+    <h2>Goal of Application</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The objective of the application is to:</p>
+
+<ol>
+<li>Model preditor-prey relationship.</li>
+<li>Allow user to modify intial conditions and growth/death rates interactively.</li>
+<li>Based on initial conditions/parameters, determine if the species survive.</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:yellow;">
+  <hgroup>
+    <h2>How to use the Application</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The user can modify 4 parameters and change the intial population of the foxes and bunnies.  Default values for bunnies is 10 and foxes is 5.  The sliders are described as follows:</p>
+
+<ol>
+<li>The growth/reproduction rate of Bunnies (default = 1)</li>
+<li>The rate at which Foxes eat Bunnies (default = 0.6)</li>
+<li>The death rate of the Foxes (default = 2)</li>
+<li>The growth of the Fox population due to excess food (default = 0.5)</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:#8DAAE3;">
+  <hgroup>
+    <h2>Example Results</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Using the default settings (shown on previous slide) of this interactive relationship, how many Bunnies and Foxes remain after 6 years?</p>
+
+<pre><code class="r">library(deSolve)
+Pars = c(alpha = 1, beta = 0.6, gamma = 2, delta = 0.5)  #Set Parameters
+State = c(x = 10, y = 5)  #Set initial population
+Time = seq(0, 20, by = 0.05)  #Run for 20 years at 0.05 year time steps
+out = as.data.frame(ode(func = fun, y = State, parms = Pars, times = Time))  #Solve ODE
+names(out) = c(&quot;Time&quot;, &quot;Bunnies&quot;, &quot;Foxes&quot;)
+out[out[, 1] == 6, ]
+</code></pre>
+
+<pre><code>##     Time Bunnies Foxes
+## 121    6   3.329 7.588
+</code></pre>
+
+<p>We started with 10 Bunnies and 5 Foxes.  After 6 years there are 3 Bunnies and 7 Foxes. </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Introduction'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Goal of Application'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='How to use the Application'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Example Results'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
